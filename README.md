@@ -101,18 +101,18 @@ It bridges the gap between workers and potential employers in Kenya and beyond, 
 - Setup backend (Express + MongoDB)
 - Setup frontend (React)
 
-### Phase 2: Core Features (Week 3-6)
+### Phase 2: Core Features (Week 3-4)
 - User authentication (JWT)
 - Worker & employer profiles
 - Job posting & job search
 - Job application flow
 
-### Phase 3: Enhancements (Week 7-10)
+### Phase 3: Enhancements (Week 5)
 - Filtering & advanced search
 - Admin dashboard
 - Basic matching algorithm
 
-### Phase 4: Deployment (Week 11-12)
+### Phase 4: Deployment (Week 6)
 - Deploy backend & frontend
 - Test live version
 - Collect feedback
@@ -160,4 +160,4 @@ MIT License
 ---
 
 ## 🔹 Author
-Developed by **[Your Name]** as part of a final project to improve access to job opportunities in Kenya's informal sector.
+Developed by **Ayany Obala** as part of PLP-July Cohort final project to improve access to job opportunities in Kenya's informal sector.
