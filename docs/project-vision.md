@@ -1,7 +1,7 @@
 # 📌 Project Vision Document  
 **Project Name:** Job-Matching App (Informal Sector Workers)  
-**Prepared By:** [Your Name]  
-**Date:** [Insert Date]  
+**Prepared By:** Ayany Z Obala  
+**Date:** 10/11/2025 
 
 ---
 
