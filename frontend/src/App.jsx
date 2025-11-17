@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { SignIn, SignUp, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import Home from "./pages/Home";
+import JobList from "./pages/JobList";
+import JobDetail from "./pages/JobDetail";
+import Dashboard from "./pages/Dashboard";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <nav className="flex justify-between items-center px-6 py-4 bg-white shadow">
+          <Link to="/" className="font-bold text-xl text-blue-600">JobLink</Link>
+          <div className="flex items-center gap-4">
+            <Link to="/jobs" className="hover:underline">Jobs</Link>
+            <SignedOut>
+              <Link to="/sign-in" className="text-sm text-gray-600">Sign In</Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+          </div>
+        </nav>
 
-export default App
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/jobs" element={<JobList />} />
+          <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/sign-in" element={<SignIn routing="path" path="/sign-in" />} />
+          <Route path="/sign-up" element={<SignUp routing="path" path="/sign-up" />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
