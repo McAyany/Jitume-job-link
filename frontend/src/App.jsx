@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import JobList from "./pages/JobList";
 import JobDetail from "./pages/JobDetail";
 import Dashboard from "./pages/Dashboard";
+import Workers from "./pages/Workers";  
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<JobList />} />
           <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/workers" element={<Workers />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sign-in" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up" element={<SignUp routing="path" path="/sign-up" />} />

@@ -9,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
+const jobsRouter = require('./src/routes/jobs.js');
+app.use('/api/jobs', jobsRouter);
+
+
 // Test route
 app.get('/', (req, res) => res.send('Backend API running'));
 
