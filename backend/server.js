@@ -10,10 +10,12 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+const userRoutes = require('./src/routes/users');
 const profileRoutes = require('./src/routes/profile');
 const employerRoutes = require('./src/routes/employer');
 const applicationRoutes = require('./src/routes/applications');
 const jobsRouter = require('./src/routes/jobs.js');
+app.use('/api/users', userRoutes);
 app.use('/api/jobs', jobsRouter);
 app.use('/api/profile', profileRoutes);
 app.use('/api/employer', employerRoutes);

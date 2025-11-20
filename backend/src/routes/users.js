@@ -15,4 +15,14 @@ router.get('/:id', async (req,res) => {
   res.json(user);
 });
 
+// list workers
+router.get('/', async (req,res) => {
+  const q = req.query.q || '';
+  const filter = { role: 'worker' };
+  if (q) filter.$or = [{ name: new RegExp(q,'i') }, { skills: new RegExp(q,'i') }];
+  const users = await User.find(filter).limit(100);
+  res.json(users);
+});
+
+
 module.exports = router;
