@@ -12,7 +12,7 @@ export default function Home() {
         </h1>
 
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          JobLink connects skilled workers with employers quickly, securely, and efficiently.  
+          Jitume JobLinKE connects skilled workers with employers quickly, securely, and efficiently.  
           Find jobs, post jobs, or hire top talent around you.
         </p>
 
