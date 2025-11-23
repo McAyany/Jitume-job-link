@@ -15,7 +15,9 @@ export default function App() {
   return (
     <Router>
       <Navbar />
+
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/jobs" element={<JobList />} />
         <Route path="/jobs/:id" element={<JobDetail />} />
@@ -23,15 +25,16 @@ export default function App() {
         {/* Protected Routes */}
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/applications" element={<ProtectedRoute><Applications /></ProtectedRoute>} />
-        <Route path="/employer" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
-        <Route path="/workers-list" element={<WorkersList />} />
-        <Route path="/workers" element={<Workers />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* Employer/Worker Dashboard */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
-        {/* Clerk Auth Routes — FIXED */}
+        <Route path="/workers-list" element={<ProtectedRoute><WorkersList /></ProtectedRoute>} />
+        <Route path="/workers" element={<ProtectedRoute><Workers /></ProtectedRoute>} />
+
+        {/* Clerk Authentication Routes */}
         <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
-        <Route path="/sign-up/*" element={<SignUp routing="path" path="sign-up" />} />
+        <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
       </Routes>
     </Router>
   );
