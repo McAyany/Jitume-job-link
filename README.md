@@ -1,145 +1,153 @@
 # Job Matching App (Informal Sector)
 
+## 📌 Live Demo
+**Live App:** _Add link here once deployed_
+
+## 🖼️ Screenshots
+_Add your project screenshots here (frontend UI, login page, dashboard, etc.)_
+
+---
+
 ## 📌 Project Overview
-The Job Matching App is a web platform designed to help **informal sector workers** (technicians, artisans, laborers, etc.) connect with job opportunities.  
-It bridges the gap between workers and potential employers in Kenya and beyond, functioning like a "freelancer marketplace" tailored for the informal sector.
+The Job Matching App is a web platform designed to help informal sector workers (technicians, artisans, laborers, etc.) connect with job opportunities.  
+It bridges the gap between workers and potential employers in Kenya and beyond—functioning like a freelancer marketplace tailored for the informal sector.
 
 ---
 
 ## 🔹 Software Development Life Cycle (SDLC)
 
-### 1. Planning & Requirements
-- Define target users: job seekers, employers, admin.
-- Gather functional requirements (profiles, job posting, job search, AI matching).
-- Define non-functional requirements (scalability, security, mobile-friendly).
+### **1. Planning & Requirements**
+- Target users: job seekers, employers, admin.
+- Functional requirements: profiles, job posting, job search, AI matching.
+- Non-functional: scalability, security, mobile-friendly design.
 
-### 2. System Design
-- **Tech Stack (MERN):**
-  - MongoDB – Database
-  - Express.js – Backend framework
-  - React – Frontend framework
-  - Node.js – Server environment
-- **Database Schema (ERD sketch):**
-  ```
-  User {
-    user_id (PK)
-    name
-    role (worker/employer)
-    skills[]
-    location
-    contact_info
-  }
+### **2. System Design**
+**Tech Stack (MERN):**
+- MongoDB  
+- Express.js  
+- React  
+- Node.js  
 
-  Job {
-    job_id (PK)
-    title
-    description
-    location
-    employer_id (FK)
-    status (open/closed)
-  }
+**Database Schema (ERD Sketch):**
+```
+User {
+  user_id (PK)
+  name
+  role (worker/employer)
+  skills[]
+  location
+  contact_info
+}
 
-  Application {
-    application_id (PK)
-    job_id (FK)
-    worker_id (FK)
-    status (pending/accepted/rejected)
-  }
-  ```
-- **APIs planned:**
-  - Auth (login/register)
-  - Job CRUD (create, list, apply)
-  - User profiles (create, update, search)
-  - AI skill-matching (future enhancement)
+Job {
+  job_id (PK)
+  title
+  description
+  location
+  employer_id (FK)
+  status (open/closed)
+}
 
-### 3. Implementation
-- **Backend (Express + MongoDB + Mongoose)**
-- **Frontend (React + Axios + Tailwind CSS)**
-- **Authentication (JWT)**
-- **Testing tools:** Postman, Jest
+Application {
+  application_id (PK)
+  job_id (FK)
+  worker_id (FK)
+  status (pending/accepted/rejected)
+}
+```
 
-### 4. Testing
-- Unit testing for backend APIs
-- Integration testing (React + Express)
-- End-to-end testing (manual + automated)
+**APIs Planned**
+- Auth (login/register)
+- Job CRUD
+- User profiles
+- AI skill-matching (future)
 
-### 5. Deployment
-- Backend: Render / Heroku / AWS
-- Frontend: Netlify / Vercel
-- DB: MongoDB Atlas (cloud-hosted)
-- Environment variables for security
+### **3. Implementation**
+- Express + MongoDB Backend  
+- React Frontend  
+- JWT Authentication  
+- Testing: Postman, Jest  
 
-### 6. Maintenance
-- Continuous improvements
-- Bug fixing
-- Add AI-powered recommendations
+### **4. Testing**
+- Unit tests  
+- Integration tests  
+- E2E tests  
+
+### **5. Deployment**
+- Backend: Render / Heroku / AWS  
+- Frontend: Netlify / Vercel  
+- DB: MongoDB Atlas  
+
+### **6. Maintenance**
+- Bug fixes  
+- Feature upgrades  
+- AI matching integration  
 
 ---
 
 ## 🔹 Features
 
-### MVP (Phase 1)
-- Worker registration & profile creation
-- Employer job posting
-- Job application system
-- Basic search & filtering
-- Authentication & authorization
+### **MVP (Phase 1)**
+- Worker registration & profiles  
+- Employer job posting  
+- Job application flow  
+- Search & filtering  
+- Authentication  
 
-### Future Features
-- AI-based skill-job matching
-- SMS/USSD integration (for offline workers)
-- Ratings & reviews system
-- Wallet & M-Pesa integration
-- Multi-language support (Swahili, English, Maasai, etc.)
+### **Future Features**
+- AI skill-job matching  
+- SMS/USSD support  
+- Rating & reviews  
+- Wallet + M-Pesa  
+- Multilingual support  
 
 ---
 
 ## 🔹 Project Roadmap
 
-### Phase 1: Setup & Structure (Week 1-2)
-- Initialize repo, add README & .gitignore
-- Setup backend (Express + MongoDB)
-- Setup frontend (React)
+### **Phase 1: Setup**
+- Initialize backend + frontend  
+- Add README & .gitignore  
 
-### Phase 2: Core Features (Week 3-4)
-- User authentication (JWT)
-- Worker & employer profiles
-- Job posting & job search
-- Job application flow
+### **Phase 2: Core Features**
+- Authentication  
+- Profiles  
+- Job posting  
+- Job search  
+- Application flow  
 
-### Phase 3: Enhancements (Week 5)
-- Filtering & advanced search
-- Admin dashboard
-- Basic matching algorithm
+### **Phase 3: Enhancements**
+- Filtering  
+- Admin dashboard  
+- Matching algorithm  
 
-### Phase 4: Deployment (Week 6)
-- Deploy backend & frontend
-- Test live version
-- Collect feedback
+### **Phase 4: Deployment**
+- Deploy frontend + backend  
+- Test live application  
 
-### Phase 5: Future Expansion (Post-MVP)
-- AI job matching
-- SMS/USSD integration
-- M-Pesa payment gateway
+### **Phase 5: Expansion**
+- AI matching  
+- USSD/SMS  
+- M-Pesa  
 
 ---
 
 ## 🔹 Installation & Setup
 
-### Prerequisites
-- Node.js & npm
+### **Prerequisites**
+- Node.js  
+- Git  
 - MongoDB (local or Atlas)
-- Git
 
-### Backend Setup
-```bash
+### **Backend**
+```
 cd backend
 npm install
 npm start
 ```
 
-### Frontend Setup
-```bash
+### **Frontend**
+```
 cd frontend
 npm install
 npm start
@@ -148,9 +156,15 @@ npm start
 ---
 
 ## 🔹 Contribution Guidelines
-- Fork repo & create feature branches
-- Write clear commit messages
-- Ensure all tests pass before merging
+- Fork the repo  
+- Use feature branches  
+- Write meaningful commits  
+- Ensure tests pass  
+
+---
+
+## 🎞️ Pitch Deck
+**Link:** _Add pitch deck link here_
 
 ---
 
@@ -159,5 +173,7 @@ MIT License
 
 ---
 
-## 🔹 Author
-Developed by **Ayany Obala** as part of PLP-July Cohort final project to improve access to job opportunities in Kenya's informal sector.
+## 👤 Author
+Developed by **Ayany Obala**  
+PLP July Cohort — Final Project  
+Designed to improve job access for informal sector workers in Kenya.
