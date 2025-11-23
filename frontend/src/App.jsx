@@ -30,8 +30,8 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
 
         {/* Clerk Auth Routes — FIXED */}
-        <Route path="/sign-in/*" element={<SignIn routing="path" />} />
-        <Route path="/sign-up/*" element={<SignUp routing="path" />} />
+        <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+        <Route path="/sign-up/*" element={<SignUp routing="path" path="sign-up" />} />
       </Routes>
     </Router>
   );
