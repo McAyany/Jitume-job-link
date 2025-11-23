@@ -1,42 +1,77 @@
-const express = require('express');
-const User = require('../models/User');
+import express from 'express';
+import User from '../models/User.js';
 
 const router = express.Router();
 
-// get current user by clerkId header (frontend sends x-clerk-user-id)
+/**
+ * @route   GET /api/profile/me
+ * @desc    Get current user by Clerk ID header
+ * @access  Private
+ */
 router.get('/me', async (req, res) => {
-  const clerkId = req.headers['x-clerk-user-id'];
-  if (!clerkId) return res.status(401).json({ msg: 'No clerk id header' });
-  const user = await User.findOne({ clerkId });
-  if (!user) return res.status(404).json({ msg: 'User not found' });
-  res.json(user);
+  try {
+    const clerkId = req.headers['x-clerk-user-id'];
+    if (!clerkId) return res.status(401).json({ msg: 'No clerk ID header' });
+
+    const user = await User.findOne({ clerkId });
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
-// create or update profile
+/**
+ * @route   POST /api/profile/me
+ * @desc    Create or update profile
+ * @access  Private
+ */
 router.post('/me', async (req, res) => {
-  const clerkId = req.headers['x-clerk-user-id'];
-  if (!clerkId) return res.status(401).json({ msg: 'No clerk id header' });
+  try {
+    const clerkId = req.headers['x-clerk-user-id'];
+    if (!clerkId) return res.status(401).json({ msg: 'No clerk ID header' });
 
-  const payload = {
-    name: req.body.name,
-    email: req.body.email,
-    role: req.body.role,
-    skills: req.body.skills || [],
-    location: req.body.location,
-    contact: req.body.contact,
-    bio: req.body.bio,
-    avatarUrl: req.body.avatarUrl
-  };
+    const payload = {
+      name: req.body.name,
+      email: req.body.email,
+      role: req.body.role,
+      skills: req.body.skills || [],
+      location: req.body.location,
+      contact: req.body.contact,
+      bio: req.body.bio,
+      avatarUrl: req.body.avatarUrl,
+    };
 
-  let user = await User.findOneAndUpdate({ clerkId }, { $set: payload }, { upsert: true, new: true });
-  res.json(user);
+    const user = await User.findOneAndUpdate(
+      { clerkId },
+      { $set: payload },
+      { upsert: true, new: true }
+    );
+
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
-// public worker profile by id
-router.get('/:id', async (req,res) => {
-  const user = await User.findById(req.params.id);
-  if(!user) return res.status(404).json({ msg: 'Not found' });
-  res.json(user);
+/**
+ * @route   GET /api/profile/:id
+ * @desc    Public worker profile by ID
+ * @access  Public
+ */
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ msg: 'Not found' });
+
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
-module.exports = router;
+export default router;

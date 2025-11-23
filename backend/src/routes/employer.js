@@ -1,38 +1,28 @@
-const express = require('express');
-const Job = require('../models/Job');
-const User = require('../models/User');
+import express from "express";
+import Job from "../models/Job.js";
+import User from "../models/User.js";
+import auth from "../middlewares/auth.js";
+import { requireEmployer } from "../middlewares/roles.js";
 
 const router = express.Router();
 
-// create job (employer)
-router.post('/', async (req, res) => {
-  const clerkId = req.headers['x-clerk-user-id'];
-  if (!clerkId) return res.status(401).json({ msg: 'No clerk id header' });
-
-  const employer = await User.findOne({ clerkId });
-  if (!employer) return res.status(403).json({ msg: 'Create profile first' });
-
+// POST a job
+router.post("/",auth, requireEmployer, async (req, res) => {
   const job = await Job.create({
-    title: req.body.title,
-    description: req.body.description,
-    location: req.body.location,
-    skillsRequired: req.body.skillsRequired || [],
-    wage: req.body.wage,
-    employer: employer._id
+    employerId: req.user.clerkId,
+    ...req.body
   });
+
+  req.user.jobsPosted.push(job._id);
+  await req.user.save();
 
   res.json(job);
 });
 
-// list jobs by this employer
-router.get('/my', async (req, res) => {
-  const clerkId = req.headers['x-clerk-user-id'];
-  if (!clerkId) return res.status(401).json({ msg: 'No clerk id header' });
-  const employer = await User.findOne({ clerkId });
-  if (!employer) return res.status(403).json({ msg: 'No employer profile' });
-
-  const jobs = await Job.find({ employer: employer._id });
+// Get employer's own jobs
+router.get("/my", auth, requireEmployer, async (req, res) => {
+  const jobs = await Job.find({ employerId: req.user.clerkId });
   res.json(jobs);
 });
 
-module.exports = router;
+export default router;

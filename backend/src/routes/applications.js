@@ -1,8 +1,8 @@
-const express = require ('express');
-const Application = require('../models/Application.js');
-const Job = require ('../models/Job.js');
-const User = require ('../models/User.js');
-const auth = require  ('../middlewares/auth.js');
+import express from "express";
+import Application from "../models/Application.js";
+import Job from "../models/Job.js";
+import User from "../models/User.js";
+import auth from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -11,43 +11,37 @@ const router = express.Router();
  * @desc    Worker applies for a job
  * @access  Private (worker)
  */
-router.post('/:jobId/apply', auth, async (req, res) => {
+router.post("/:jobId/apply", auth, async (req, res) => {
   try {
     const { coverNote } = req.body;
     const jobId = req.params.jobId;
 
-    // Ensure worker exists in DB (Clerk user must have created a profile)
     const worker = await User.findById(req.userId);
-    if (!worker) return res.status(403).json({ msg: 'Create a profile first' });
+    if (!worker) return res.status(403).json({ msg: "Create a profile first" });
 
-    // Ensure job exists
     const job = await Job.findById(jobId);
-    if (!job) return res.status(404).json({ msg: 'Job not found' });
+    if (!job) return res.status(404).json({ msg: "Job not found" });
 
-    // Prevent employer applying to own job
-    if (job.employer.toString() === req.userId) {
-      return res.status(400).json({ msg: 'You cannot apply to your own job.' });
-    }
+    if (job.employer.toString() === req.userId)
+      return res.status(400).json({ msg: "You cannot apply to your own job." });
 
-    // Prevent duplicate application
     const existing = await Application.findOne({
       job: jobId,
-      worker: req.userId
+      worker: req.userId,
     });
     if (existing)
-      return res.status(400).json({ msg: 'Already applied for this job.' });
+      return res.status(400).json({ msg: "Already applied for this job." });
 
-    // Create new application
     const application = await Application.create({
       job: jobId,
       worker: req.userId,
-      coverNote
+      coverNote,
     });
 
     res.status(201).json(application);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: "Server error" });
   }
 });
 
@@ -56,16 +50,16 @@ router.post('/:jobId/apply', auth, async (req, res) => {
  * @desc    Worker gets THEIR applications
  * @access  Private (worker)
  */
-router.get('/my', auth, async (req, res) => {
+router.get("/my", auth, async (req, res) => {
   try {
     const applications = await Application.find({ worker: req.userId })
-      .populate('job', 'title description location status employer')
+      .populate("job", "title description location status employer")
       .sort({ createdAt: -1 });
 
     res.json(applications);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: "Server error" });
   }
 });
 
@@ -74,26 +68,26 @@ router.get('/my', auth, async (req, res) => {
  * @desc    Employer views applications for their job
  * @access  Private (employer)
  */
-router.get('/for-job/:jobId', auth, async (req, res) => {
+router.get("/for-job/:jobId", auth, async (req, res) => {
   try {
     const jobId = req.params.jobId;
 
     const job = await Job.findById(jobId);
-    if (!job) return res.status(404).json({ msg: 'Job not found' });
+    if (!job) return res.status(404).json({ msg: "Job not found" });
 
-    // Ensure only the employer who posted the job can view applications
-    if (job.employer.toString() !== req.userId) {
-      return res.status(403).json({ msg: 'Not authorized to view applications for this job' });
-    }
+    if (job.employer.toString() !== req.userId)
+      return res
+        .status(403)
+        .json({ msg: "Not authorized to view applications for this job" });
 
     const applications = await Application.find({ job: jobId })
-      .populate('worker', 'name skills location contact')
+      .populate("worker", "name skills location contact")
       .sort({ createdAt: -1 });
 
     res.json(applications);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: "Server error" });
   }
 });
 
@@ -102,26 +96,26 @@ router.get('/for-job/:jobId', auth, async (req, res) => {
  * @desc    Employer updates an application status (accept/reject)
  * @access  Private (employer)
  */
-router.patch('/:id/status', auth, async (req, res) => {
+router.patch("/:id/status", auth, async (req, res) => {
   try {
-    const { status } = req.body; // accepted | rejected
+    const { status } = req.body;
 
-    const application = await Application.findById(req.params.id).populate('job');
-    if (!application) return res.status(404).json({ msg: 'Application not found' });
+    const application = await Application.findById(req.params.id).populate("job");
+    if (!application) return res.status(404).json({ msg: "Application not found" });
 
-    // Only employer who created the job can update application status
-    if (application.job.employer.toString() !== req.userId) {
-      return res.status(403).json({ msg: 'Not authorized to modify this application' });
-    }
+    if (application.job.employer.toString() !== req.userId)
+      return res
+        .status(403)
+        .json({ msg: "Not authorized to modify this application" });
 
     application.status = status;
     await application.save();
 
-    res.json({ msg: 'Status updated', application });
+    res.json({ msg: "Status updated", application });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: "Server error" });
   }
 });
 
-module.exports = router;
+export default router;

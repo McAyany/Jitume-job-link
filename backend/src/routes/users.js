@@ -1,28 +1,50 @@
-const express = require("express");
-const User = require("../models/User.js");
+import express from "express";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-// get all users (admin only)
-router.get('/', async (req,res) => {
-  const users = await User.find().select('-passwordHash');
-  res.json(users);
+/**
+ * @route   GET /api/users
+ * @desc    Get all users (admin only) or search workers
+ * @access  Private (admin or public search)
+ */
+router.get("/", async (req, res) => {
+  try {
+    const q = req.query.q || "";
+
+    // If query is present, filter for workers by name or skills
+    if (q) {
+      const filter = {
+        role: "worker",
+        $or: [{ name: new RegExp(q, "i") }, { skills: new RegExp(q, "i") }],
+      };
+      const users = await User.find(filter).limit(100).select("-passwordHash");
+      return res.json(users);
+    }
+
+    // No query → return all users (admin only)
+    const users = await User.find().select("-passwordHash");
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
-// get user by id
-router.get('/:id', async (req,res) => {
-  const user = await User.findById(req.params.id).select('-passwordHash');
-  res.json(user);
+/**
+ * @route   GET /api/users/:id
+ * @desc    Get user by ID
+ * @access  Private
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-passwordHash");
+    if (!user) return res.status(404).json({ msg: "User not found" });
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
-// list workers
-router.get('/', async (req,res) => {
-  const q = req.query.q || '';
-  const filter = { role: 'worker' };
-  if (q) filter.$or = [{ name: new RegExp(q,'i') }, { skills: new RegExp(q,'i') }];
-  const users = await User.find(filter).limit(100);
-  res.json(users);
-});
-
-
-module.exports = router;
+export default router;

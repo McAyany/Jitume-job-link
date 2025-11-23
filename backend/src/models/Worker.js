@@ -9,4 +9,7 @@ const WorkerSchema = new mongoose.Schema({
   bio: String
 }, { timestamps: true });
 
-export default mongoose.model("Worker", WorkerSchema);
+// Use existing model if it exists, otherwise create it
+const Worker = mongoose.models.Worker || mongoose.model("Worker", WorkerSchema);
+
+export default Worker;

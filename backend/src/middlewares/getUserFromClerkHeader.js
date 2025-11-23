@@ -1,4 +1,4 @@
-const User = require('../models/User');
+import User from '../models/User';
 
 module.exports = async function(req, res, next) {
   const clerkId = req.headers['x-clerk-user-id'];
