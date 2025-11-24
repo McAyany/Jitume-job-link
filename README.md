@@ -1,10 +1,11 @@
 # Job Matching App (Informal Sector)
 
 ## 📌 Live Demo
-**Live App:** _Add link here once deployed_
+**Live App:** https://jitume-job-link.pages.dev/
+**API Server:** https://jitume-job-link.onrender.com/
 
 ## 🖼️ Screenshots
-_Add your project screenshots here (frontend UI, login page, dashboard, etc.)_
+[homepage](./docs/homepage.png) [login_page](./docs/log-in.png) [dashboard]()
 
 ---
 
@@ -164,7 +165,7 @@ npm start
 ---
 
 ## 🎞️ Pitch Deck
-**Link:** _Add pitch deck link here_
+**Link:** https://www.canva.com/design/DAG5VvrqTMs/bhMOdC5JZe3ZAAsZTY2X_A/edit?utm_content=DAG5VvrqTMs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ---
 
